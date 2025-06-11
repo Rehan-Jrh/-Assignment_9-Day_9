@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Slider</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .s {
+      width: 600px;
+      overflow: hidden;
+      position: relative;
+      background-color: #ffffff;
+    }
+
+    .i {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .i img {
+      width: 600px;
+      height: 400px;
+      flex-shrink: 0;
+    }
+
+    button {
+      position: relative;
+      top: 30px;
+      width: 80px;
+      height: 40px;
+      background-color: #000;
+      color: red;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    button:hover {
+      color: aqua;
+    }
+
+    .m {
+      border: 2px solid black;
+      min-width: 600px;
+      height: 500px;
+      box-shadow: 10px 10px 8px #888888;
+      text-align: center;
+    }
+    
+    .dots {
+      position: relative;
+      top: 20px;
+      text-align: center;
+    }
+    
+    .dot {
+      border: 1px solid black;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px; 
+      display: inline-block;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    .active {
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="m"> 
+    <div class="s">
+      <div class="i" id="slider">
+        <img src="download.jpg" alt="Image 1">
+        <img src="download1.jpg" alt="Image 2">
+        <img src="download2.jpg" alt="Image 3">
+        <img src="download3.jpg" alt="Image 4">
+      </div>
+    </div>
+    
+    <div class="dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+    </div>
+
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+  </div>
+  
+  <script>
+    const slider = document.getElementById("slider");
+    const images = document.querySelectorAll(".i img");
+    const next = document.getElementById("next");
+    const prev = document.getElementById("prev");
+    const dots = document.querySelectorAll(".dot");
+  
+    let index = 0;
+    const totalImages = images.length;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${index * 600}px)`;
+      
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[index].classList.add("active");
+    }
+  
+    next.addEventListener("click", () => {
+      if (index < totalImages - 1) {
+        index++;
+        updateSlider();
+      }
+    });
+  
+    prev.addEventListener("click", () => {
+      if (index > 0) {
+        index--;
+        updateSlider();
+      }
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener("click", () => {
+        index = parseInt(dot.getAttribute("data-index"));
+        updateSlider();
+      });
+    });
+  </script>
+</body>
+</html>
